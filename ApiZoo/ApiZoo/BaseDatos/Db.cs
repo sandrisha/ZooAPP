@@ -77,12 +77,84 @@ namespace ApiZoo
             while (reader.Read())
             {
                 TiposAnimal ClaseDeAnimal = new TiposAnimal();
-                ClaseDeAnimal.id = (long)reader["id"];
+                ClaseDeAnimal.id = (long)reader["idTipoAnimal"];
                 ClaseDeAnimal.denominacion = reader["denominacion"].ToString();
                 // añadir a la lista que voy a devolver
                 resultado.Add(ClaseDeAnimal);
             }
             return resultado;
+        }
+
+        public static List<TiposAnimal> GetTiposAnimalesPorId(long id)
+        {
+            List<TiposAnimal> resultado = new List<TiposAnimal>();
+            //LLAMO A LA BASE DE DATOS
+
+            //PREPARO EL PROCEDIMIENTO A EJECUTAR
+            string procedimiento = "dbo.GetTiposAnimalesPorId";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametroId = new SqlParameter();
+            parametroId.ParameterName = "idTipoAnimal";
+            parametroId.SqlDbType = SqlDbType.BigInt;
+            parametroId.SqlValue = id;
+            comando.Parameters.Add(parametroId);
+            // EJECUTO EL COMANDO
+            SqlDataReader reader = comando.ExecuteReader();
+            // PROCESO EL RESULTADO Y LO MENTO EN LA VARIABLE
+            while (reader.Read())
+            {
+                TiposAnimal ClaseDeAnimal = new TiposAnimal();
+                ClaseDeAnimal.id = (long)reader["idTipoAnimal"];
+                ClaseDeAnimal.denominacion = reader["denominacion"].ToString();
+                // añadir a la lista que voy a devolver
+                resultado.Add(ClaseDeAnimal);
+            }
+            return resultado;
+        }
+
+        public static int AgregarTiposAnimales(TiposAnimal claseDeAnimal)
+        {
+            string procedimiento = "dbo.AgregarTipoAnimal";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = "denominacion";
+            parametro.SqlDbType = SqlDbType.NVarChar;
+            parametro.SqlValue = claseDeAnimal.denominacion;
+
+            comando.Parameters.Add(parametro);
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
+        }
+
+        public static int ActualizarTiposAnimales(long id, TiposAnimal claseDeAnimal)
+        {
+            string procedimiento = "dbo.ActualizarTiposAnimales";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametroId = new SqlParameter();
+            parametroId.ParameterName = "idTipoAnimal";
+            parametroId.SqlDbType = SqlDbType.BigInt;
+            parametroId.SqlValue = id;
+            comando.Parameters.Add(parametroId);
+
+            SqlParameter parametroDenominacion = new SqlParameter();
+            parametroDenominacion.ParameterName = "denominacion";
+            parametroDenominacion.SqlDbType = SqlDbType.NVarChar;
+            parametroDenominacion.SqlValue = claseDeAnimal.denominacion;
+            comando.Parameters.Add(parametroDenominacion);
+
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
         }
 
 
