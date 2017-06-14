@@ -107,14 +107,34 @@ namespace ApiZoo.Controllers
             catch (Exception)
             {
                 resultado.totalElementos = 0;
-                resultado.error = "Se produjo un error";
+                resultado.error = "Error al actualizar el TipoAnimal";
             }
             return Ok(resultado);
         }
 
         // DELETE: api/Tipos/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.EliminarTipoAnimal(id);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al eliminar el Tipo de Animal";
+            }
+            return Ok(resultado);
         }
     }
 }

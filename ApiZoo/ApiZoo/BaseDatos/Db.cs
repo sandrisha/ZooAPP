@@ -157,6 +157,176 @@ namespace ApiZoo
             return filasAfectadas;
         }
 
+        public static int EliminarTipoAnimal(long id)
+        {
+            string procedimiento = "dbo.EliminarTipoAnimal";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = "idTipoAnimal";
+            parametro.SqlDbType = SqlDbType.BigInt;
+            parametro.SqlValue = id;
+            comando.Parameters.Add(parametro);
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
+        }
+
+        // <<<<<<<<<FUNCIONES PARA CLASIFICACIONES>>>>>>>>>>>
+
+        public static List<Clasificacion> GetClasificacion()
+        {
+            List<Clasificacion> resultado = new List<Clasificacion>();
+            //LLAMO A LA BASE DE DATOS
+
+            //PREPARO EL PROCEDIMIENTO A EJECUTAR
+            string procedimiento = "dbo.GetClasificacion";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            //INDICO QUE LO QUE VOY A EJECUTAR ES UN PROCED ALMACENADO StoreProcedure
+            comando.CommandType = CommandType.StoredProcedure;
+            //EJECUTO EL COMANDO
+            SqlDataReader reader = comando.ExecuteReader();
+            // PROCESO EL RESULTADO Y LO METO EN LA VARIABLE
+            while (reader.Read())
+            {
+                Clasificacion clasific = new Clasificacion();
+                clasific.id = (int)reader["idClasificacion"];
+                clasific.denominacion = reader["denominacion"].ToString();
+                // añadir a la lista que voy a devolver
+                resultado.Add(clasific);
+            }
+            return resultado;
+        }
+
+        public static List<Clasificacion> GetClasificacionPorId(long id)
+        {
+            List<Clasificacion> resultado = new List<Clasificacion>();
+            //LLAMO A LA BASE DE DATOS
+
+            //PREPARO EL PROCEDIMIENTO A EJECUTAR
+            string procedimiento = "dbo.GetClasificacionPorId";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            //INDICO QUE LO QUE VOY A EJECUTAR ES UN PROCED ALMACENADO StoreProcedure
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametroId = new SqlParameter();
+            parametroId.ParameterName = "idClasificacion";
+            parametroId.SqlDbType = SqlDbType.BigInt;
+            parametroId.SqlValue = id;
+            comando.Parameters.Add(parametroId);
+
+            //EJECUTO EL COMANDO
+            SqlDataReader reader = comando.ExecuteReader();
+            // PROCESO EL RESULTADO Y LO METO EN LA VARIABLE
+            while (reader.Read())
+            {
+                Clasificacion clasific = new Clasificacion();
+                clasific.id = (int)reader["idClasificacion"];
+                clasific.denominacion = reader["denominacion"].ToString();
+                // añadir a la lista que voy a devolver
+                resultado.Add(clasific);
+            }
+            return resultado;
+        }
+
+        public static int AgregarClasificacion(Clasificacion clasif)
+        {
+            string procedimiento = "dbo.AgregarClasificacion";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = "denominacion";
+            parametro.SqlDbType = SqlDbType.NVarChar;
+            parametro.SqlValue = clasif.denominacion;
+
+            comando.Parameters.Add(parametro);
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
+        }
+
+        public static int ActualizarClasificacion(long id, Clasificacion clasif)
+        {
+            string procedimiento = "dbo.ActualizarClasificacion";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = "idTipoAnimal";
+            parametro.SqlDbType = SqlDbType.BigInt;
+            parametro.SqlValue = id;
+            comando.Parameters.Add(parametro);
+
+            SqlParameter parametroDenominacion = new SqlParameter();
+            parametroDenominacion.ParameterName = "denominacion";
+            parametroDenominacion.SqlDbType = SqlDbType.NVarChar;
+            parametroDenominacion.SqlValue = clasif.denominacion;
+            comando.Parameters.Add(parametroDenominacion);
+
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
+        }
+
+        public static int EliminarClasificacion(long id)
+        {
+            string procedimiento = "dbo.EliminarClasificacion";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = "idClasificacion";
+            parametro.SqlDbType = SqlDbType.BigInt;
+            parametro.SqlValue = id;
+            comando.Parameters.Add(parametro);
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            return filasAfectadas;
+        }
+
+        // <<<<<<<<<FUNCIONES PARA ESPECIE>>>>>>>>>>>
+
+        public static List<Especie> GetEspecies()
+        {
+            // CREO EL OBJETO EN EL QUE SE DEVOLVERÁN LOS RESULTADOS
+            List<Especie> resultado = new List<Especie>();
+
+            // PREPARO LA LLAMADA AL PROCEDIMIENTO ALMACENADO
+            string procedimiento = "dbo.GetEspecies";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            // EJECUTO EL COMANDO
+            SqlDataReader reader = comando.ExecuteReader();
+            // RECORRO EL RESULTADO Y LO PASO A LA VARIABLE A DEVOLVER
+            while (reader.Read())
+            {
+                // CREO LA ESPECIE
+                Especie especie = new Especie();
+                especie.idEspecie = (long)reader["idEspecie"];
+                especie.idClasificacion = (int)reader["idEspecie"];
+                especie.idTipoAnimal = (long)reader["idEspecie"];
+                especie.nombre = reader["nombre"].ToString();
+                especie.nPatas = (short)reader["nPatas"];
+                especie.esMascota = (bool)reader["esMascota"];
+
+                // AÑADO LA ESPECIE A LA LISTA DE RESULTADOS
+                resultado.Add(especie);
+            }
+            return resultado;
+        }
+
+
 
 
     }
