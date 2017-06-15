@@ -36,9 +36,29 @@ namespace ApiZoo.Controllers
         }
 
         // GET: api/Especie/5
-        public string Get(int id)
+        public RespuestaApi Get(long id)
         {
-            return "value";
+            RespuestaApi resultado = new RespuestaApi();
+            List<Especie> listaEspecie = new List<Especie>();
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    listaEspecie = Db.GetEspeciesPorId(id);
+                }
+                resultado.error = "";
+                Db.Desconectar();
+            }
+            catch
+            {
+                resultado.error = "Se produjo un error";
+            }
+
+            resultado.totalElementos = listaEspecie.Count;
+            resultado.dataEspecie = listaEspecie;
+            return resultado;
         }
 
         // POST: api/Especie

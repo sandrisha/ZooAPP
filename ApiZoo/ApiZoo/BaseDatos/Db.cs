@@ -314,12 +314,54 @@ namespace ApiZoo
                 // CREO LA ESPECIE
                 Especie especie = new Especie();
                 especie.idEspecie = (long)reader["idEspecie"];
-                especie.idClasificacion = (int)reader["idEspecie"];
-                especie.idTipoAnimal = (long)reader["idEspecie"];
-                especie.nombre = reader["nombre"].ToString();
+                especie.nombre = reader["NombreEspecie"].ToString();
+                especie.Clasificacion = new Clasificacion();
+                especie.Clasificacion.id = (int)reader["idClasificacion"];
+                especie.Clasificacion.denominacion = reader["Clasificacion"].ToString();
+                especie.TipoAnimal = new TiposAnimal();
+                especie.TipoAnimal.id = (int)reader["idClasificacion"];
+                especie.TipoAnimal.denominacion = reader["Clasificacion"].ToString();
                 especie.nPatas = (short)reader["nPatas"];
                 especie.esMascota = (bool)reader["esMascota"];
+                // AÑADO LA ESPECIE A LA LISTA DE RESULTADOS
+                resultado.Add(especie);
+            }
+            return resultado;
+        }
 
+        public static List<Especie> GetEspeciesPorId(long id)
+        {
+            // CREO EL OBJETO EN EL QUE SE DEVOLVERÁN LOS RESULTADOS
+            List<Especie> resultado = new List<Especie>();
+
+            // PREPARO LA LLAMADA AL PROCEDIMIENTO ALMACENADO
+            string procedimiento = "dbo.GetEspeciesPorId";
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            SqlParameter parametroId = new SqlParameter();
+            parametroId.ParameterName = "idEspecie";
+            parametroId.SqlDbType = SqlDbType.BigInt;
+            parametroId.SqlValue = id;
+            comando.Parameters.Add(parametroId);
+
+            SqlDataReader reader = comando.ExecuteReader();
+            // RECORRO EL RESULTADO Y LO PASO A LA VARIABLE A DEVOLVER
+            while (reader.Read())
+            {
+                // CREO LA ESPECIE
+                Especie especie = new Especie();
+                especie.idEspecie = (long)reader["idEspecie"];
+                especie.nombre = reader["NombreEspecie"].ToString();
+                especie.Clasificacion = new Clasificacion();
+                especie.Clasificacion.id = (int)reader["idClasificacion"];
+                especie.Clasificacion.denominacion = reader["Clasificacion"].ToString();
+                especie.TipoAnimal = new TiposAnimal();
+                especie.TipoAnimal.id = (int)reader["idClasificacion"];
+                especie.TipoAnimal.denominacion = reader["Clasificacion"].ToString();
+                especie.nPatas = (short)reader["nPatas"];
+                especie.esMascota = (bool)reader["esMascota"];
                 // AÑADO LA ESPECIE A LA LISTA DE RESULTADOS
                 resultado.Add(especie);
             }

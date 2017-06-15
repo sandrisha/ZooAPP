@@ -1,17 +1,3 @@
--- CREAMOS EL PROCEDIMIENTO ALMACENADO
---ALTER PROCEDURE GetAnimalPorEspecie
---AS
---BEGIN
---	SELECT 
---	Especies.nombre as NombreEspecie
---	, Clasificaciones.denominacion as Clasificacion
---	, TiposAnimal.denominacion as TiposAnimal
---	FROM Clasificaciones
---		INNER JOIN Especies ON Clasificaciones.idClasificacion = Especies.idEspecie
---		INNER JOIN TiposAnimal ON Especies.idTipoAnimal = TiposAnimal.idTipoAnimal
---	ORDER BY Especies.nombre
---END
-
 -- PROCEDIMIENTO ALMACENADO PARA OBTENER TODOS LOS DATOS DE LA TABLA TIPOSANIMALES
 ALTER PROCEDURE GetTiposAnimales
 AS
@@ -105,11 +91,30 @@ BEGIN
 END
 
 -- PROCEDIMIENTO OBTENER TODOS LOS DATOS DE LA TABLA ESPECIES
-ALTER PROCEDURE GetEspecies
+ALTER PROCEDURE GetSoloEspecies
 AS
 	BEGIN
 		SELECT idEspecie, idClasificacion, idTipoAnimal, nombre, nPatas, esMascota
 		FROM Especies
+END
+
+-- PROCEDIMIENTO ALMACENADO UNIENDO CONTENIDO DE TODAS LAS TABLAS
+ALTER PROCEDURE GetEspecies
+AS
+BEGIN
+	SELECT  
+	Especies.idEspecie 
+	, Especies.nombre as NombreEspecie
+	, Especies.idClasificacion 
+	, Clasificaciones.denominacion as Clasificacion
+	, Especies.idTipoAnimal
+	, TiposAnimal.denominacion as TipoAnimal
+	, Especies.nPatas
+	, Especies.esMascota
+	FROM Clasificaciones
+		INNER JOIN Especies ON Clasificaciones.idClasificacion = Especies.idClasificacion
+		INNER JOIN TiposAnimal ON Especies.idTipoAnimal = TiposAnimal.idTipoAnimal
+	ORDER BY Especies.nombre
 END
 
 -- PROCEDIMIENTO OBTENER TODOS LOS DATOS DE LA TABLA ESPECIES POR ID
@@ -117,9 +122,20 @@ ALTER PROCEDURE GetEspeciesPorId
 	@idEspecie bigint
 AS
 BEGIN
-    SELECT idEspecie, idClasificacion, idTipoAnimal, nombre, nPatas, esMascota
-    FROM Especies
-    WHERE Especies.idEspecie = @idEspecie
+	SELECT  
+	Especies.idEspecie 
+	, Especies.nombre as NombreEspecie
+	, Especies.idClasificacion 
+	, Clasificaciones.denominacion as Clasificacion
+	, Especies.idTipoAnimal
+	, TiposAnimal.denominacion as TipoAnimal
+	, Especies.nPatas
+	, Especies.esMascota
+	FROM Clasificaciones
+		INNER JOIN Especies ON Clasificaciones.idClasificacion = Especies.idClasificacion
+		INNER JOIN TiposAnimal ON Especies.idTipoAnimal = TiposAnimal.idTipoAnimal
+	WHERE Especies.idEspecie = @idEspecie
+	ORDER BY Especies.nombre
 END
 
 -- PROCEDIMIENTO PARA INSERTAR UNA NUEVA ESPECIE

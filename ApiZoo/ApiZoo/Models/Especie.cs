@@ -8,8 +8,8 @@ namespace ApiZoo
     public class Especie
     {
         public long idEspecie { get; set; }
-        public int idClasificacion { get; set; }
-        public long idTipoAnimal { get; set; }
+        public Clasificacion Clasificacion { get; set; }
+        public TiposAnimal TipoAnimal { get; set; }
         public string nombre { get; set; }
         public short nPatas { get; set; }
         public bool esMascota { get; set; }
