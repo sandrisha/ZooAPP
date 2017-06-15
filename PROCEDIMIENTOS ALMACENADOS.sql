@@ -117,27 +117,6 @@ BEGIN
 	ORDER BY Especies.nombre
 END
 
--- PROCEDIMIENTO OBTENER TODOS LOS DATOS DE LA TABLA ESPECIES POR ID
-ALTER PROCEDURE GetEspeciesPorId
-	@idEspecie bigint
-AS
-BEGIN
-	SELECT  
-	Especies.idEspecie 
-	, Especies.nombre as NombreEspecie
-	, Especies.idClasificacion 
-	, Clasificaciones.denominacion as Clasificacion
-	, Especies.idTipoAnimal
-	, TiposAnimal.denominacion as TipoAnimal
-	, Especies.nPatas
-	, Especies.esMascota
-	FROM Clasificaciones
-		INNER JOIN Especies ON Clasificaciones.idClasificacion = Especies.idClasificacion
-		INNER JOIN TiposAnimal ON Especies.idTipoAnimal = TiposAnimal.idTipoAnimal
-	WHERE Especies.idEspecie = @idEspecie
-	ORDER BY Especies.nombre
-END
-
 -- PROCEDIMIENTO PARA INSERTAR UNA NUEVA ESPECIE
 ALTER PROCEDURE AgregarEspecie
 	@nombre nvarchar(50)
