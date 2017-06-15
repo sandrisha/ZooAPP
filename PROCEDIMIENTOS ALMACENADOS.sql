@@ -90,14 +90,6 @@ BEGIN
 	DELETE FROM Clasificaciones WHERE idClasificacion = @id
 END
 
--- PROCEDIMIENTO OBTENER TODOS LOS DATOS DE LA TABLA ESPECIES
-ALTER PROCEDURE GetSoloEspecies
-AS
-	BEGIN
-		SELECT idEspecie, idClasificacion, idTipoAnimal, nombre, nPatas, esMascota
-		FROM Especies
-END
-
 -- PROCEDIMIENTO ALMACENADO UNIENDO CONTENIDO DE TODAS LAS TABLAS
 ALTER PROCEDURE GetEspecies
 AS
