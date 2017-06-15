@@ -1,6 +1,10 @@
 # ZooAPP
 Proyecto de creación de API  hecho durante el curso de MCSD.
 
+* Ctrl+S / Cmd+S to save the file
+* Ctrl+S / Cmd+S to save the file
+* Ctrl+S / Cmd+S to save the file
+* Ctrl+S / Cmd+S to save the file
 0.- Crear un repositorio en GitHub. Incluir el fichero .gitignore y README.md con nombre y una breve descripción del ejercicio*
 1.- Crear la base de datos.
 2.- Crear un login para acceder a esa base de datos
