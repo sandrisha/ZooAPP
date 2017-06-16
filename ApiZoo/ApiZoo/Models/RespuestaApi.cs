@@ -17,5 +17,6 @@ namespace ApiZoo
         public List<Clasificacion> dataClasificacion { get; set; }
 
         public List<Especie> dataEspecie { get; set; }
+
     }
 }
