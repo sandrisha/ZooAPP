@@ -10,5 +10,5 @@
 * Crear las **clases** de los *Modelos*. Una para cada tabla de la base de datos.
 * Crear un **controlador** para cada tabla. Con los métodos básicos para hacer *Get*, *Get(id)*, *Post*, *Put*, *Delete*
 * Preparar una clase llamada *Db.cs* para incluir la programación para **interactuar con la base de datos** llamando a los procedimientos almacenados.
-* Modificar los métodos *** *Get*, *Get(id)*, *Post*, *Put*, *Delete* ** de cada controlador para llamen a los métodos de la clase *Db.cs*.
-* ** *(Opcional)* ** Crear ficheros *html* y *js* para llamar al api creada. (TODO)
+* Modificar los **métodos Get, Get(id), Post, Put, Delete** de cada controlador para llamen a los métodos de la clase *Db.cs*.
+* **(Opcional)** Crear ficheros *html* y *js* para llamar al api creada. (TODO)
