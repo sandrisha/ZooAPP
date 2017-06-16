@@ -3,7 +3,7 @@
 
 * Crear un **repositorio** en GitHub. Incluir el fichero .gitignore y README.md con nombre y una breve descripción del ejercicio
 * Crear la **base de datos.**
-* Crear un login para acceder a esa base de datos
+* Crear un **login** para acceder a esa base de datos
 * Crear las **tablas y rellenar** con filas de ejemplo (*al menos 3 filas para TiposAnimal y Clasificaciones. Al menos 10 en la tabla de Especies*).
 * Crear los **procedimientos almacenados.**
 * Crear un proyecto de **webapi de .NET** llamada *ZooApp*.
